@@ -60,21 +60,33 @@ public class Administrator {
         )
         """;
         try {
-            //stmt.executeQuery(category);
-            //stmt.executeQuery(manufacturer);
-            //stmt.executeQuery(part);
-            //stmt.executeQuery(salesperson);
-            //stmt.executeQuery(transaction);
+            stmt.executeQuery(category);
+            stmt.executeQuery(manufacturer);
+            stmt.executeQuery(part);
+            stmt.executeQuery(salesperson);
+            stmt.executeQuery(transaction);
             System.out.println("Table added successfully \n");
-        }
-        catch(Exception e) {
+        } catch(Exception e) {
             System.out.println("Something went wrong in create\n" + e);
         }
     }
 
+    private void delete() {
+        try {
+            stmt.executeQuery("DROP TABLE category CASCADE CONSTRAINTS");
+            stmt.executeQuery("DROP TABLE manufacturer CASCADE CONSTRAINTS");
+            stmt.executeQuery("DROP TABLE part CASCADE CONSTRAINTS");
+            stmt.executeQuery("DROP TABLE salesperson CASCADE CONSTRAINTS");
+            stmt.executeQuery("DROP TABLE transaction CASCADE CONSTRAINTS");
+            System.out.println("Table dropped successfully \n");
+        } catch(Exception e) {
+            System.out.println("Something went wrong in delete\n" + e);
+        }
+    }
     public void execute() {
         System.out.print("executing admin\n");
         create();
+        delete();
     }
 
 }
