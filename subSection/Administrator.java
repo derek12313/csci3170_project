@@ -1,7 +1,6 @@
 package subSection;
 import java.sql.*;
 import java.util.*;
-
 import java.io.*;
 
 public class Administrator {
@@ -64,17 +63,13 @@ public class Administrator {
         )
         """;
         try {
+            System.out.print("Processing...");
             stmt.executeQuery(createCategory);
-            System.out.println("create1");
             stmt.executeQuery(createManufacturer);
-            System.out.println("create2");
             stmt.executeQuery(createPart);
-            System.out.println("create3");
             stmt.executeQuery(createSalesperson);
-            System.out.println("create4");
             stmt.executeQuery(createTransaction);
-            System.out.println("create5");
-            System.out.println("Table added successfully");
+            System.out.println("Done! Database is initialized!");
         } catch(Exception e) {
             System.out.println("Something went wrong in create" + e);
         }
@@ -82,12 +77,13 @@ public class Administrator {
 
     private void delete() {
         try {
+            System.out.print("Processing...");
             stmt.executeQuery("DROP TABLE category CASCADE CONSTRAINTS");
             stmt.executeQuery("DROP TABLE manufacturer CASCADE CONSTRAINTS");
             stmt.executeQuery("DROP TABLE part CASCADE CONSTRAINTS");
             stmt.executeQuery("DROP TABLE salesperson CASCADE CONSTRAINTS");
             stmt.executeQuery("DROP TABLE transaction CASCADE CONSTRAINTS");
-            System.out.println("Table dropped successfully");
+            System.out.println("Done! Database is removed!");
         } catch(Exception e) {
             System.out.println("Something went wrong in delete" + e);
         }
@@ -176,8 +172,10 @@ public class Administrator {
     private void load(Scanner scanner) {
         try {
             System.out.println("Type in the source data folder path: ");// ./project-files/sample_data
-            String path = scanner.nextLine();
-            System.out.print("Processing...");
+            String path = "";
+            path = scanner.nextLine();
+            path = scanner.nextLine();
+            System.out.println("path:" + path);
             File folder = new File(path);
             File[] listOfFiles = folder.listFiles();
             File categoryFile=null, manufacturerFile=null, salespersonFile=null, partFile=null, transactionFile=null;
@@ -193,9 +191,9 @@ public class Administrator {
             loadSalesperson(salespersonFile);
             loadPart(partFile);
             loadTransaction(transactionFile);
-            System.out.println("Data is loaded!");
+            System.out.println("Done! Data is inputted to the database!");
         } catch(Exception e) {
-            System.out.println("Something went wrong in load" + e);
+            System.out.println("Something went wrong in load: " + e);
         }
 
     }
@@ -209,6 +207,7 @@ public class Administrator {
             String[] validTable = {"category", "manufacturer", "salesperson", "part", "transaction"};
             for(int i=0; i<5; i++) {
                 if(table.compareToIgnoreCase(validTable[i]) == 0) {
+                    System.out.println("Content from table " + validTable[i] + ":");
                     utility.printQuery("SELECT * FROM " + table);
                     found = true;
                 }
@@ -219,12 +218,37 @@ public class Administrator {
 
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("executing admin");
-        delete();
-        create();
-        load(scanner);
-        show(scanner);
-        scanner.close();
+        Utility utility = new Utility(stmt);
+        String[] options = 
+        {
+            "Create all tables",
+            "Delete all tables",
+            "Load from datafile",
+            "Show content of a table",
+            "Return to the main menu"
+        };
+        boolean running = true;
+        while(running) {
+            int choice = utility.prompt(scanner, "administrator menu", options);
+            switch (choice) {
+                case 1:
+                    create();
+                    break; 
+                case 2:
+                    delete();
+                    break; 
+                case 3:
+                    load(scanner);
+                    break;
+                case 4:
+                    show(scanner);
+                    break;
+                case 5:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid input, please try again");
+            }
+        }    
     }
-
 }
