@@ -11,63 +11,71 @@ public class Administrator {
     }
     
     private void create() {
-        String category = 
+        String createCategory = 
         """
         CREATE TABLE CATEGORY (
-            CATEGORY_ID INTEGER NOT NULL PRIMARY KEY CHECK(CATEGORY_ID >= 1 AND CATEGORY_ID <= 9),
-            CATEGORY_NAME VARCHAR(20) NOT NULL
+            C_ID INTEGER NOT NULL PRIMARY KEY CHECK(C_ID >= 1 AND C_ID <= 9),
+            C_NAME VARCHAR(20) NOT NULL
         )
         """;
-        String manufacturer =
+        String createManufacturer =
         """
         CREATE TABLE MANUFACTURER (
-            MANUFACTURER_ID INTEGER NOT NULL PRIMARY KEY CHECK(MANUFACTURER_ID >= 1 AND MANUFACTURER_ID <= 999),
-            MANUFACTURER_NAME VARCHAR(20) NOT NULL,
-            MANUFACTURER_ADDRESS VARCHAR(50) NOT NULL,
-            MANUFACTURER_NUMBER INTEGER NOT NULL CHECK(MANUFACTURER_NUMBER >= 10000000 AND MANUFACTURER_NUMBER <= 99999999)
+            M_ID INTEGER NOT NULL PRIMARY KEY CHECK(M_ID >= 1 AND M_ID <= 999),
+            M_NAME VARCHAR(20) NOT NULL,
+            M_ADDRESS VARCHAR(50) NOT NULL,
+            M_NUMBER INTEGER NOT NULL CHECK(M_NUMBER >= 10000000 AND M_NUMBER <= 99999999)
         )
         """;
-        String part =
+        String createPart =
         """
         CREATE TABLE PART (
-            PART_ID INTEGER NOT NULL PRIMARY KEY CHECK(PART_ID >= 1 AND PART_ID <= 999),
-            PART_NAME VARCHAR(20) NOT NULL,
-            PART_PRICE INTEGER NOT NULL CHECK(PART_PRICE >= 1 AND PART_PRICE <= 99999),
-            PART_MANUFACTURER_ID INTEGER NOT NULL CHECK(PART_MANUFACTURER_ID >= 1 AND PART_MANUFACTURER_ID <= 99),
-            PART_CATEGORY_ID INTEGER NOT NULL CHECK(PART_CATEGORY_ID >= 1 AND PART_CATEGORY_ID <= 9),
-            PART_WARRANTY INTEGER NOT NULL CHECK(PART_WARRANTY >= 1 AND PART_WARRANTY <= 99),
-            PART_AVAILABLE_QUANTITY INTEGER NOT NULL CHECK(PART_AVAILABLE_QUANTITY >= 0 AND PART_AVAILABLE_QUANTITY <= 99)
-
+            P_ID INTEGER NOT NULL PRIMARY KEY CHECK(P_ID >= 1 AND P_ID <= 999),
+            P_NAME VARCHAR(20) NOT NULL,
+            P_PRICE INTEGER NOT NULL CHECK(P_PRICE >= 1 AND P_PRICE <= 99999),
+            M_ID INTEGER NOT NULL,
+            C_ID INTEGER NOT NULL,
+            P_WARRANTY INTEGER NOT NULL CHECK(P_WARRANTY >= 1 AND P_WARRANTY <= 99),
+            P_AVAILABLE_QUANTITY INTEGER NOT NULL CHECK(P_AVAILABLE_QUANTITY >= 0 AND P_AVAILABLE_QUANTITY <= 99),
+            CONSTRAINT fk_manufacturer FOREIGN KEY (M_ID) REFERENCES MANUFACTURER(M_ID),
+            CONSTRAINT fk_category FOREIGN KEY (C_ID) REFERENCES CATEGORY(C_ID)
         )
         """;
-        String salesperson =
+        String createSalesperson =
         """
         CREATE TABLE SALESPERSON (
-            SALESPERSON_ID INTEGER NOT NULL PRIMARY KEY CHECK(SALESPERSON_ID >= 1 AND SALESPERSON_ID <= 99),
-            SALESPERSON_NAME VARCHAR(20) NOT NULL,
-            SALESPERSON_ADDRESS VARCHAR(50) NOT NULL,
-            SALESPERSON_PHONE_NUMBER INTEGER NOT NULL CHECK(SALESPERSON_PHONE_NUMBER >= 10000000 AND SALESPERSON_PHONE_NUMBER <= 99),
-            SALESPERSON_EXPERIENCE INTEGER NOT NULL CHECK(SALESPERSON_EXPERIENCE >= 1 AND SALESPERSON_EXPERIENCE <= 9)
+            S_ID INTEGER NOT NULL PRIMARY KEY CHECK(S_ID >= 1 AND S_ID <= 99),
+            S_NAME VARCHAR(20) NOT NULL,
+            S_ADDRESS VARCHAR(50) NOT NULL,
+            S_PHONE_NUMBER INTEGER NOT NULL CHECK(S_PHONE_NUMBER >= 10000000 AND S_PHONE_NUMBER <= 99999999),
+            S_EXPERIENCE INTEGER NOT NULL CHECK(S_EXPERIENCE >= 1 AND S_EXPERIENCE <= 9)
         )
         """;
-        String transaction =
+        String createTransaction =
         """
         CREATE TABLE TRANSACTION (
-            TRANSACTION_ID INTEGER NOT NULL PRIMARY KEY CHECK(TRANSACTION_ID >= 1 AND TRANSACTION_ID <= 9999),
-            PART_ID INTEGER NOT NULL CHECK(PART_ID >= 1 AND PART_ID <= 999),
-            SALESPERSON_ID INTEGER NOT NULL CHECK(SALESPERSON_ID >= 1 AND SALESPERSON_ID <= 99),
-            TRANSACTION_DATE DATE NOT NULL
+            T_ID INTEGER NOT NULL PRIMARY KEY CHECK(T_ID >= 1 AND T_ID <= 9999),
+            P_ID INTEGER NOT NULL CHECK(P_ID >= 1 AND P_ID <= 999),
+            S_ID INTEGER NOT NULL CHECK(S_ID >= 1 AND S_ID <= 99),
+            TRANSACTION_DATE DATE NOT NULL,
+            CONSTRAINT fk_part FOREIGN KEY (P_ID) REFERENCES PART(P_ID),
+            CONSTRAINT fk_salesperson FOREIGN KEY (S_ID) REFERENCES SALESPERSON(S_ID)
         )
         """;
         try {
-            stmt.executeQuery(category);
-            stmt.executeQuery(manufacturer);
-            stmt.executeQuery(part);
-            stmt.executeQuery(salesperson);
-            stmt.executeQuery(transaction);
-            System.out.println("Table added successfully \n");
+            stmt.executeQuery(createCategory);
+            System.out.println("create1");
+            stmt.executeQuery(createManufacturer);
+            System.out.println("create2");
+            stmt.executeQuery(createPart);
+            System.out.println("create3");
+            stmt.executeQuery(createSalesperson);
+            System.out.println("create4");
+            stmt.executeQuery(createTransaction);
+            System.out.println("create5");
+            System.out.println("Table added successfully");
         } catch(Exception e) {
-            System.out.println("Something went wrong in create\n" + e);
+            System.out.println("Something went wrong in create" + e);
         }
     }
 
@@ -78,15 +86,122 @@ public class Administrator {
             stmt.executeQuery("DROP TABLE part CASCADE CONSTRAINTS");
             stmt.executeQuery("DROP TABLE salesperson CASCADE CONSTRAINTS");
             stmt.executeQuery("DROP TABLE transaction CASCADE CONSTRAINTS");
-            System.out.println("Table dropped successfully \n");
+            System.out.println("Table dropped successfully");
         } catch(Exception e) {
-            System.out.println("Something went wrong in delete\n" + e);
+            System.out.println("Something went wrong in delete" + e);
+        }
+    }
+
+    private void loadCategory(File file) {
+        String thisLine;
+        try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        while ((thisLine = br.readLine()) != null) {
+            String[] arg = thisLine.split("\t");
+            String insertAdministrator = String.format("INSERT INTO CATEGORY VALUES('%s', '%s')", arg[0], arg[1]);
+            System.out.println(insertAdministrator);
+            stmt.executeQuery(insertAdministrator);
+        }         
+        br.close();
+        } catch (Exception e){
+            System.err.println("Error: " + e);
+        }
+    }
+
+    private void loadManufacturer(File file) {
+        String thisLine;
+        try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        while ((thisLine = br.readLine()) != null) {
+            String[] arg = thisLine.split("\t");
+            String insertManufacturer = String.format("INSERT INTO MANUFACTURER VALUES('%s', '%s', '%s', '%s')", arg[0], arg[1], arg[2], arg[3]);
+            System.out.println(insertManufacturer);
+            stmt.executeQuery(insertManufacturer);
+        }         
+        br.close();
+        } catch (Exception e){
+            System.err.println("Error: " + e);
+        }
+    }
+
+    private void loadPart(File file) {
+        String thisLine;
+        try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        while ((thisLine = br.readLine()) != null) {
+            String[] arg = thisLine.split("\t");
+            String insertPart = String.format("INSERT INTO PART VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')", arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]);
+            System.out.println(insertPart);
+            stmt.executeQuery(insertPart);
+        }         
+        br.close();
+        } catch (Exception e){
+            System.err.println("Error: " + e);
+        }
+    }
+
+    private void loadSalesperson(File file) {
+        String thisLine;
+        try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        while ((thisLine = br.readLine()) != null) {
+            String[] arg = thisLine.split("\t");
+            String insertSalesperson = String.format("INSERT INTO SALESPERSON VALUES('%s', '%s', '%s', '%s', '%s')", arg[0], arg[1], arg[2], arg[3], arg[4]);
+            System.out.println(insertSalesperson);
+            stmt.executeQuery(insertSalesperson);
+        }         
+        br.close();
+        } catch (Exception e){
+            System.err.println("Error: " + e);
+        }
+    }
+
+    private void loadTransaction(File file) {
+        String thisLine;
+        try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        while ((thisLine = br.readLine()) != null) {
+            String[] arg = thisLine.split("\t");
+            String insertTransaction = String.format("INSERT INTO TRANSACTION VALUES('%s', '%s', '%s', TO_DATE('%s', 'DD/MM/YYYY'))", arg[0], arg[1], arg[2], arg[3]);
+            System.out.println(insertTransaction);
+            stmt.executeQuery(insertTransaction);
+        }         
+        br.close();
+        } catch (Exception e){
+            System.err.println("Error: " + e);
+        }
+    }
+    private void load() {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Type in the source data folder path: ");// ./project-files/sample_data
+            String path = scanner.nextLine();
+            System.out.print("Processing...");
+            File folder = new File(path);
+            File[] listOfFiles = folder.listFiles();
+            File categoryFile=null, manufacturerFile=null, salespersonFile=null, partFile=null, transactionFile=null;
+            for(int i=0; i < listOfFiles.length; i++) {
+                if(listOfFiles[i].getName().compareTo("category.txt") == 0) categoryFile = listOfFiles[i];
+                if(listOfFiles[i].getName().compareTo("manufacturer.txt") == 0) manufacturerFile = listOfFiles[i];
+                if(listOfFiles[i].getName().compareTo("salesperson.txt") == 0) salespersonFile = listOfFiles[i];
+                if(listOfFiles[i].getName().compareTo("part.txt") == 0) partFile = listOfFiles[i];
+                if(listOfFiles[i].getName().compareTo("transaction.txt") == 0) transactionFile = listOfFiles[i];
+            }
+            loadCategory(categoryFile);
+            loadManufacturer(manufacturerFile);
+            loadSalesperson(salespersonFile);
+            loadPart(partFile);
+            loadTransaction(transactionFile);
+            System.out.println("Data is loaded!");
+        } catch(Exception e) {
+            System.out.println("Something went wrong in load" + e);
         }
     }
     public void execute() {
-        System.out.print("executing admin\n");
-        create();
+        System.out.println("executing admin");
         delete();
+        create();
+        load();
     }
 
 }

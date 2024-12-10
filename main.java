@@ -1,6 +1,4 @@
 import java.sql.*;
-import java.util.Scanner;
-import java.io.*;
 import subSection.*;;
 
 class main {
