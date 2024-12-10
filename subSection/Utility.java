@@ -1,5 +1,6 @@
 package subSection;
 import java.sql.*;
+import java.util.*;
 
 
 public class Utility {
@@ -29,6 +30,24 @@ public class Utility {
             rs.close();
         } catch (Exception e) {
             System.err.println(e);
+        }
+    }
+
+    public int prompt(Scanner scanner, String interfaceName, String[] options) {
+        System.out.println("-----" + interfaceName + "-----");
+        System.out.println("What kind of operation would you like to perform");
+        for(int i=0; i<options.length; i++) {
+            System.out.println(i+1 + ". " + options[i]);
+        }
+        System.out.print("Enter Your Choice: ");
+        while(true) {
+            int choice = scanner.nextInt();
+            if(choice >= 1 && choice <= options.length) {
+                return choice;
+            }
+            else {
+                System.out.println("Invalid input, please try again:");
+            }
         }
     }
 }
