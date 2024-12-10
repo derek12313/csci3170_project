@@ -1,6 +1,7 @@
 package subSection;
 import java.sql.*;
 import java.util.*;
+
 import java.io.*;
 
 public class Administrator {
@@ -171,9 +172,9 @@ public class Administrator {
             System.err.println("Error: " + e);
         }
     }
-    private void load() {
+
+    private void load(Scanner scanner) {
         try {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Type in the source data folder path: ");// ./project-files/sample_data
             String path = scanner.nextLine();
             System.out.print("Processing...");
@@ -196,12 +197,34 @@ public class Administrator {
         } catch(Exception e) {
             System.out.println("Something went wrong in load" + e);
         }
+
     }
+
+    private void show(Scanner scanner) {
+        Utility utility = new Utility(stmt);
+        boolean found = false;
+        System.out.print("Which table would you like to show: ");
+        while(!found) {
+            String table = scanner.nextLine();
+            String[] validTable = {"category", "manufacturer", "salesperson", "part", "transaction"};
+            for(int i=0; i<5; i++) {
+                if(table.compareToIgnoreCase(validTable[i]) == 0) {
+                    utility.printQuery("SELECT * FROM " + table);
+                    found = true;
+                }
+            }
+            if(!found) System.out.print("Invalid table! Enter again(valid example: category): ");
+        }
+    }
+
     public void execute() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("executing admin");
         delete();
         create();
-        load();
+        load(scanner);
+        show(scanner);
+        scanner.close();
     }
 
 }
