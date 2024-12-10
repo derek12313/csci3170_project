@@ -1,10 +1,12 @@
 import java.sql.*;
+import java.util.*;
 import subSection.*;;
 
 class main {
     public static void main(String args[]) {
         Connection conn = null;
         Statement stmt = null;
+        Scanner scanner = new Scanner(System.in);
         try {
             System.out.print("connecting to database\n");
             conn = DriverManager.getConnection
@@ -19,7 +21,8 @@ class main {
             System.err.println("Something went wrong:\n" + e + "\n");
         }
         Administrator administrator = new Administrator(stmt);
-        administrator.execute();
-            
+        Utility utility = new Utility(stmt);
+        System.out.println("main ended");
+        
     }
 }
