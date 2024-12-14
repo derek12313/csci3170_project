@@ -1,7 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "ojdbc7.jar"
+        "lib/ojdbc10.jar"
     ],
     "cSpell.words": [
         "ches",

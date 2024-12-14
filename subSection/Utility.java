@@ -35,7 +35,7 @@ public class Utility {
 
     public int prompt(Scanner scanner, String interfaceName, String[] options) {
         System.out.println("-----" + interfaceName + "-----");
-        System.out.println("What kind of operation would you like to perform");
+        System.out.println("What kind of operation would you like to perform?");
         for(int i=0; i<options.length; i++) {
             System.out.println(i+1 + ". " + options[i]);
         }
