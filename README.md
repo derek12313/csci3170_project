@@ -19,7 +19,9 @@
    - Handles the connection to the Oracle database and provides the main menu for users to navigate between the Administrator, Salesperson and Manager operations.
 
 2. **`subSection/Administrator.java`**
- 
+   - Contains the logic for Administrator operations.
+   - Includes functionality for create, read and delete operation.
+   - Includes functionality for loading data from a given path.
 
 3. **`subSection/Salesperson.java`**
    - Contains the logic for Salesperson operations.
