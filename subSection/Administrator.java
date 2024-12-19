@@ -173,6 +173,7 @@ public class Administrator {
         try {
             System.out.println("Type in the source data folder path: ");// ./project-files/sample_data
             String path = "";
+            // For some reason the first line read is empty
             path = scanner.nextLine();
             path = scanner.nextLine();
             System.out.println("path:" + path);
@@ -203,6 +204,7 @@ public class Administrator {
         boolean found = false;
         System.out.print("Which table would you like to show: ");
         while(!found) {
+            String table = scanner.nextLine();
             String table = scanner.nextLine();
             String[] validTable = {"category", "manufacturer", "salesperson", "part", "transaction"};
             for(int i=0; i<5; i++) {
