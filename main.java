@@ -23,7 +23,7 @@ class main {
         }
         Administrator administrator = new Administrator(stmt);
         Salesperson salesperson = new Salesperson(stmt);
-        // Manager manager = new Manager(stmt);
+        Manager manager = new Manager(stmt);
         Utility utility = new Utility(stmt);
         System.out.println("Welcome to sales system!");
         String[] options = 
@@ -44,7 +44,7 @@ class main {
                     salesperson.execute();
                     break; 
                 case 3:
-                    // manager.execute();
+                    manager.execute();
                     break;
                 case 4:
                     running = false;
