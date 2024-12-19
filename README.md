@@ -31,7 +31,7 @@
    - Provides utility methods for common operations, such as prompting the user for input and printing query results.
 
 6. **`lib/*`**
-   - Contains ojdbc10.jar for compilation of the programme
+   - Contains ojdbc10.jar for compilation of the program
 ---
 ## Methods of Compilation and Execution
 
