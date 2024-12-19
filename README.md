@@ -26,6 +26,9 @@
    - Includes functionality for searching for parts and performing transaction.
 
 4. **`subSection/Manager.java`**
+   - Contains the logic for Administrator operations.
+   - Includes functionality for create, read and delete operation.
+   - Includes functionality for loading data from a given path.
 
 5. **`subSection/Utility.java`**
    - Provides utility methods for common operations, such as prompting the user for input and printing query results.
@@ -42,26 +45,26 @@
 
 2. Compile the Java files:
    - Navigate to the root directory of the project.
-   - Run the following command to compile all `.java` files:
+   - Run the following command to compile:
      ```bash
-     javac -cp .;lib\ojdbc10.jar main.java subSection/*.java
+      javac -cp ".;lib\ojdbc10.jar" -d . main.java subSection/*.java
      ```
 
    - Use `:` instead of `;` as the classpath separator if using macOS or Linux:
      ```bash
-     javac -cp .:lib/ojdbc10.jar main.java subSection/*.java
+     javac -cp ".:lib/ojdbc10.jar" -d . main.java subSection/*.java
      ```
 
 ### **Execution**
 1. Run the program:
    - Execute the compiled program by running the following command:
      ```bash
-     java -cp .;lib\ojdbc10.jar main
+     java -cp ".;lib\ojdbc10.jar" main
      ```
 
    - **Note**: Use `:` instead of `;` as the classpath separator if using macOS or Linux:
      ```bash
-     java -cp .:lib/ojdbc10.jar main
+     java -cp ".:lib/ojdbc10.jar" main
      ```
 
 2. Follow the prompts in the terminal:
