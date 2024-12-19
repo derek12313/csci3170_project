@@ -19,17 +19,18 @@
    - Handles the connection to the Oracle database and provides the main menu for users to navigate between the Administrator, Salesperson and Manager operations.
 
 2. **`subSection/Administrator.java`**
- 
+   - Contains the logic for Administrator operations.
+   - Includes functionality for create, read and delete operation.
+   - Includes functionality for loading data from a given path.
 
 3. **`subSection/Salesperson.java`**
    - Contains the logic for Salesperson operations.
    - Includes functionality for searching for parts and performing transaction.
 
 4. **`subSection/Manager.java`**
-   - Contains the logic for Administrator operations.
-   - Includes functionality for create, read and delete operation.
-   - Includes functionality for loading data from a given path.
-
+   - The Manager class runs database queries for sales-related tasks like listing, counting, and summarizing data.
+   - It uses SQL and user inputs with validation to display results interactively.
+     
 5. **`subSection/Utility.java`**
    - Provides utility methods for common operations, such as prompting the user for input and printing query results.
 

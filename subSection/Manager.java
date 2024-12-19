@@ -16,7 +16,9 @@ public class Manager{
         int order;
         while (true) {
             System.out.println("Choose ordering: ");
-    
+            System.out.println("1. By ascending order");
+            System.out.println("2. By descending order");
+
             if (scanner.hasNextInt()) {
                 order = scanner.nextInt();
                 if (order == 1 || order == 2) {
@@ -38,7 +40,7 @@ public class Manager{
                        S_PHONE_NUMBER AS "Mobile Phone",
                        S_EXPERIENCE AS "Years of Experience"
                 FROM SALESPERSON
-                ORDER BY S_NAME ASC;
+                ORDER BY S_NAME ASC
                 """;
         } else {
             query = """
@@ -47,7 +49,7 @@ public class Manager{
                        S_PHONE_NUMBER AS "Mobile Phone",
                        S_EXPERIENCE AS "Years of Experience"
                 FROM SALESPERSON
-                ORDER BY S_EXPERIENCE DESC;
+                ORDER BY S_EXPERIENCE DESC
                 """;
         }
         utility.printQuery(query);
@@ -61,9 +63,9 @@ public class Manager{
         while (true) {
             try {
                 System.out.print("Type in the lower bound of years of experience: ");
-                lowerBound = Integer.parseInt(scanner.nextLine());
+                lowerBound = scanner.nextInt();
                 System.out.print("Type in the upper bound of years of experience: ");
-                upperBound = Integer.parseInt(scanner.nextLine());
+                upperBound = scanner.nextInt();
         
                 if (upperBound >= lowerBound) {
                     break;
@@ -75,16 +77,16 @@ public class Manager{
         }
         System.out.println("Transaction Record:");
         String query = """
-            SELECT S.S_ID AS ID,
-                S.S_NAME AS Name,
-                S.S_EXPERIENCE AS Years of Experience,
-                COUNT(T.T_ID) AS Number of Transactions
-            FROM SALESPERSON AS S
-            LEFT JOIN TRANSACTION AS T ON S.S_ID = T.S_ID
-            WHERE S.S_EXPERIENCE >= %d
-            AND S.S_EXPERIENCE <= %d
+            SELECT S.S_ID AS "ID",
+                S.S_NAME AS "Name",
+                S.S_EXPERIENCE AS "Years of Experience",
+                COUNT(T.T_ID) AS "Number of Transactions"
+            FROM SALESPERSON S
+            LEFT JOIN TRANSACTION T ON S.S_ID = T.S_ID
+            WHERE S.S_EXPERIENCE BETWEEN %d
+            AND %d
             GROUP BY S.S_ID, S.S_NAME, S.S_EXPERIENCE
-            ORDER BY Number of Transactions DESC;
+            ORDER BY COUNT(T.T_ID) DESC
             """.formatted(lowerBound, upperBound);
 
         utility.printQuery(query);
@@ -99,11 +101,11 @@ public class Manager{
             SELECT M.M_ID AS "Manufacturer ID",
                    M.M_NAME AS "Manufacturer Name",
                    SUM(P.P_PRICE) AS "Total Sales Value"
-            FROM MANUFACTURER AS M
-            JOIN PART AS P ON M.M_ID = P.M_ID
-            JOIN TRANSACTION AS T ON P.P_ID = T.P_ID
+            FROM MANUFACTURER M
+            JOIN PART P ON M.M_ID = P.M_ID
+            JOIN TRANSACTION T ON P.P_ID = T.P_ID
             GROUP BY M.M_ID, M.M_NAME
-            ORDER BY "Total Sales Value" DESC;
+            ORDER BY SUM(P.P_PRICE) DESC
             """;
         utility.printQuery(query);
         System.out.println("End of Query");
@@ -131,13 +133,13 @@ public class Manager{
         scanner.nextLine();
         String query = """
             SELECT p.P_ID AS "Part ID", 
-            p.P_NAME AS "Part Name", 
-            COUNT(p.P_ID) AS "No. of Transaction"
-            FROM PART AS p
-            JOIN TRANSACTION AS t ON p.P_ID = t.P_ID
-            GROUP BY p.P_ID
-            ORDER BY "No. of Transaction" DESC
-            FETCH FIRST %d ROWS ONLY;
+                    p.P_NAME AS "Part Name", 
+                    COUNT(p.P_ID) AS "No. of Transaction"
+            FROM PART p
+            JOIN TRANSACTION t ON p.P_ID = t.P_ID
+            GROUP BY p.P_ID, p.P_NAME
+            ORDER BY COUNT(p.P_ID) DESC
+            FETCH FIRST %d ROWS ONLY
         """.formatted(num_parts);
 
         utility.printQuery(query);
