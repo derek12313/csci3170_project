@@ -26,7 +26,9 @@
    - Includes functionality for searching for parts and performing transaction.
 
 4. **`subSection/Manager.java`**
-
+   - The Manager class runs database queries for sales-related tasks like listing, counting, and summarizing data.
+   - It uses SQL and user inputs with validation to display results interactively.
+     
 5. **`subSection/Utility.java`**
    - Provides utility methods for common operations, such as prompting the user for input and printing query results.
 
