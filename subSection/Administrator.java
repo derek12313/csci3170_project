@@ -205,7 +205,7 @@ public class Administrator {
         System.out.print("Which table would you like to show: ");
         while(!found) {
             String table = scanner.nextLine();
-            String table = scanner.nextLine();
+            table = scanner.nextLine();
             String[] validTable = {"category", "manufacturer", "salesperson", "part", "transaction"};
             for(int i=0; i<5; i++) {
                 if(table.compareToIgnoreCase(validTable[i]) == 0) {
