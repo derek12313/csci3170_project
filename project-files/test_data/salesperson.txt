@@ -1,6 +1,8 @@
-1 Maria Fortner 750, Rainbow Drive, Youngstown 25037060 4
-2 John Smith 4718, Wildrose Lane, Bloomfield Township 28592710 2
-3 Colin Carlin 2564, Vesta Drive, Chicago 27689679 1
-4 Kimberly Wooldridge 1549, McKinley Avenue, Denver 28366016 2
-5 Alex Johnson 123 Elm St, Springfield, IL 27678901 3
-6 Jamie Taylor 45 Oak Lane, Dallas, TX 28513009 1
+1	Emily Davis	1234, Oak Street, Springfield	12345678	1
+2	James Carter	5678, Pine Street, Boston	23456789	2
+3	Linda Johnson	9101, Cedar Avenue, Seattle	34567890	3
+4	Robert Brown	1121, Birch Road, Austin	45678901	4
+5	Susan Wilson	3141, Elm Drive, Denver	56789012	2
+6	Mark White	1617, Maple Lane, Atlanta	67890123	3
+7	Patricia Green	1819, Aspen Boulevard, Chicago	78901234	1
+8	Charles Hall	2021, Walnut Street, Miami	89012345	4
