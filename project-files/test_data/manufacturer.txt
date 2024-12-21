@@ -1,10 +1,10 @@
-1	AMD	1 AMD Way, Austin, TX, USA	1234567890
-2	Intel	1234 Intel Lane, Santa Clara, CA, USA	2345678901
-3	Gigabyte	5678 Gigabyte Road, Taipei, Taiwan	3456789012
-4	MSI	9101 MSI Street, Taipei, Taiwan	4567890123
-5	Samsung	1121 Samsung Avenue, Suwon, South Korea	5678901234
-6	Western Digital	3141 WD Parkway, San Jose, CA, USA	6789012345
-7	Be Quiet!	1617 Quiet Lane, Glinde, Germany	7890123456
-8	Asus	1819 Asus Boulevard, Taipei, Taiwan	8901234567
-9	EVGA	2021 EVGA Drive, Brea, CA, USA	9012345678
-10	Corsair	3142 Corsair Road, Fremont, CA, USA	1231231234
+1	AMD	12 AMD Way, Austin, TX, USA	12345678
+2	Intel	1234 Intel Lane, Santa Clara, CA, USA	23456789
+3	Gigabyte	5678 Gigabyte Road, Taipei, Taiwan	34567890
+4	MSI	9101 MSI Street, Taipei, Taiwan	45678901
+5	Samsung	1121 Samsung Avenue, Suwon, South Korea	56789012
+6	Western Digital	3141 WD Parkway, San Jose, CA, USA	67890123
+7	Be Quiet!	1617 Quiet Lane, Glinde, Germany	78901234
+8	Asus	1819 Asus Boulevard, Taipei, Taiwan	89012345
+9	EVGA	2021 EVGA Drive, Brea, CA, USA	90123456
+10	Corsair	3142 Corsair Road, Fremont, CA, USA	12312312

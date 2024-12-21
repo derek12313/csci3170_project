@@ -18,7 +18,7 @@ public class Manager{
             System.out.println("Choose ordering: ");
             System.out.println("1. By ascending order");
             System.out.println("2. By descending order");
-
+            System.out.println("Choose the list of ordering: ");
             if (scanner.hasNextInt()) {
                 order = scanner.nextInt();
                 if (order == 1 || order == 2) {

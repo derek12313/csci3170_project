@@ -42,6 +42,7 @@ public class Utility {
         System.out.print("Enter Your Choice: ");
         while(true) {
             int choice = scanner.nextInt();
+            System.out.print("\n");
             if(choice >= 1 && choice <= options.length) {
                 return choice;
             }
